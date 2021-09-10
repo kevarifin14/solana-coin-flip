@@ -1,4 +1,6 @@
-import { forwardRef, MouseEventHandler, ReactNode } from 'react';
+import {
+  FC, forwardRef, MouseEventHandler, ReactElement, ReactNode,
+} from 'react';
 
 import Spin from 'components/Spin';
 
@@ -12,11 +14,12 @@ export type ButtonProps = {
   size?: 'lg',
   onClick?: MouseEventHandler<HTMLButtonElement>,
   block?: boolean,
+  icon?: ReactElement,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((
   {
-    type, children, htmlType = 'button', className, loading, disabled, onClick, block, size,
+    type, children, htmlType = 'button', className, loading, disabled, onClick, block, size, icon,
   },
   ref,
 ) => {
@@ -29,7 +32,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((
   const buttonClassName = [
     'inline-flex', 'items-center', 'justify-center', 'border',
     'rounded-md', 'shadow-sm', 'focus:outline-none', 'font-medium',
-    'focus:ring-2', 'focus:ring-offset-2',
     type === 'primary' ? primaryClassName : '',
     type === 'secondary' ? secondaryClassName : '',
     loading || disabled ? disabledClassName : '',
@@ -46,6 +48,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((
       disabled={disabled || loading}
       onClick={onClick}
     >
+      {icon && (
+        <div className="-ml-0.5 mr-2">
+          {icon}
+        </div>
+      )}
+
       {loading
         && (
           <Spin />

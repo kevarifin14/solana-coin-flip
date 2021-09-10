@@ -1,5 +1,12 @@
 import 'tailwindcss/tailwind.css'; // eslint-disable-line import/no-extraneous-dependencies
 import { DefaultSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
+
+import WalletsModalProvider from 'components/WalletsModalProvider';
+
+const WalletConnectionProvider = dynamic(() => import('components/WalletProvider'), {
+  ssr: false,
+});
 
 function App({ Component, pageProps }) {
   const title = 'title';
@@ -17,10 +24,12 @@ function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
-    <>
-      <DefaultSeo {...seoProps} />
-      {getLayout(<Component {...pageProps} />)}
-    </>
+    <WalletConnectionProvider>
+      <WalletsModalProvider>
+        <DefaultSeo {...seoProps} />
+        {getLayout(<Component {...pageProps} />)}
+      </WalletsModalProvider>
+    </WalletConnectionProvider>
   );
 }
 

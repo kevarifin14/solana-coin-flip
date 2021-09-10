@@ -10,7 +10,7 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <main>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col relative">
         <Navbar />
         {children}
       </div>
